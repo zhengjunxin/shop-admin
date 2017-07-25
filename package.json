@@ -1,0 +1,30 @@
+{
+  "name": "shop-admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.16.2",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.0.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "watch-css": "yarn build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start-react": "npm-run-all -p watch-css start-js",
+    "start-server": "cd server && yarn start",
+    "start": "npm-run-all -p start-react start-server",
+    "build-css": "node-sass-chokidar src/ -o src/",    
+    "build-js": "react-scripts build",
+    "build-react": "npm-run-all build-css build-js",
+    "build-server": "cd server && yarn build",
+    "build": "npm-run-all build-react build-server",
+    "serve": "cd server && yarn serve",
+    "deploy": "npm-run-all build serve"
+  },
+  "proxy": "http://localhost:8080"
+}
