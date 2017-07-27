@@ -16,17 +16,12 @@ class App extends Component {
 		);
 	}
 	componentDidMount() {
-		axios.get('/list')
+		axios.get('/api/cart/add')
 			.then(res => {
 				console.log('-list-', res)
 			})
 			.catch(err => {
 				console.log(err)
-			})
-		fetch('/list')
-			.then(res => res.json())
-			.then(res => {
-				console.log('-', res)
 			})
 	}
 }

@@ -17,7 +17,7 @@
     "start-js": "react-scripts start",
     "start-react": "npm-run-all -p watch-css start-js",
     "start-server": "cd server && yarn start",
-    "start": "npm-run-all -p start-react start-server",
+    "start": "yarn start-react & yarn start-server",
     "build-css": "node-sass-chokidar src/ -o src/",    
     "build-js": "react-scripts build",
     "build-react": "npm-run-all build-css build-js",

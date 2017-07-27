@@ -1,0 +1,46 @@
+{
+    "errno": 0,
+    "errmsg": "",
+    "data": {
+        "cartList": [
+            {
+                "id": 80,
+                "user_id": 1,
+                "session_id": "1",
+                "goods_id": 1006013,
+                "goods_sn": "1006013",
+                "product_id": 10,
+                "goods_name": "双宫茧桑蚕丝被 空调被",
+                "market_price": 699,
+                "retail_price": 699,
+                "number": 3,
+                "goods_specifition_name_value": "",
+                "goods_specifition_ids": "",
+                "checked": 1,
+                "list_pic_url": "http://yanxuan.nosdn.127.net/583812520c68ca7995b6fac4c67ae2c7.png"
+            },
+            {
+                "id": 79,
+                "user_id": 1,
+                "session_id": "1",
+                "goods_id": 1097004,
+                "goods_sn": "1097004",
+                "product_id": 120,
+                "goods_name": "原素系列实木餐桌",
+                "market_price": 1699,
+                "retail_price": 1699,
+                "number": 2,
+                "goods_specifition_name_value": "",
+                "goods_specifition_ids": "",
+                "checked": 1,
+                "list_pic_url": "http://yanxuan.nosdn.127.net/54f822e9c542d20566c7f70f90d52ae6.png"
+            }
+        ],
+        "cartTotal": {
+            "goodsCount": 5,
+            "goodsAmount": 5495,
+            "checkedGoodsCount": 5,
+            "checkedGoodsAmount": 5495
+        }
+    }
+}
