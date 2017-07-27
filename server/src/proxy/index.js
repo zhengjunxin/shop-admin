@@ -1,0 +1,1 @@
+exports.Banner = require('./banner')

@@ -1,5 +1,7 @@
-import express from 'express'
-import path from 'path'
+const express = require('express')
+const path = require('path')
+require('./models')
+const Banner = require('./controllers/banner')
 
 const app = express()
 const port = 8080
