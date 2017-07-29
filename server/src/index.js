@@ -1,7 +1,11 @@
 const express = require('express')
 const path = require('path')
 require('./models')
-const Banner = require('./controllers/banner')
+const axios = require('axios')
+const bodyParser = require('body-parser')
+
+const banner = require('./controllers/banner')
+const home = require('./controllers/home')
 
 const app = express()
 const port = 8080
@@ -14,6 +18,7 @@ const getFile = req => {
     return require(json)
 }
 
+app.use(bodyParser.json())
 app.use(express.static(build))
 
 app.get('/list', (req, res) => {
@@ -25,9 +30,11 @@ app.get('/list', (req, res) => {
     }))
 })
 
-app.get('/index/index', (req, res) => {
-    res.send(getFile(req))
-})
+app.get('/index/index', home.index)
+
+app.get('/banners', banner.getBanners)
+app.post('/banners', banner.setBanner)
+app.delete('/banner/:id', banner.remove)
 
 app.get('/api/goods/detail', (req, res) => {
     res.send(getFile(req))

@@ -14,4 +14,4 @@ const Schema = new mongoose.Schema({
 
 const Banner = mongoose.model('Banner', Schema)
 
-export default Banner
+module.exports = Banner

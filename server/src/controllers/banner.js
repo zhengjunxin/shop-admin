@@ -1,5 +1,39 @@
-const Banner = require('../proxy').Banner
+const Banner = require('../proxy/banner')
 
-exports.getBanners = () => {
-    return Banner.getBanners()
+exports.getBanners = (req, res) => {
+    Banner.getBanners()
+        .then(banners => {
+            res.send(banners)
+        })
+}
+
+exports.setBanner = (req, res) => {
+    const banner = req.body
+    if (banner) {
+        Banner.setBanner(banner)
+            .then(banner => {
+                res.send({
+                    errno: 0,
+                })
+            })
+    }
+    else {
+        res.send({
+            errno: 1,
+        })
+    }
+}
+
+exports.remove = (req, res) => {
+    const _id = req.params.id
+    if (_id) {
+        Banner.removeBanner({
+            _id,
+        })
+        .then(resp => {
+            res.send({
+                errno: 0,
+            })
+        })
+    }
 }
