@@ -6,10 +6,13 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon src/index.js --exec babel-node",
+    "start-db": "mongod --dbpath='./data'",
+    "start-server": "nodemon src/index.js --exec babel-node",
+    "start": "npm-run-all -p start-db start-server",
     "build": "babel src -d build",
     "serve": "node build/index.js"
   },
