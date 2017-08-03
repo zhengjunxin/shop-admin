@@ -52,6 +52,15 @@ app.get('*', (req, res) => {
     res.sendFile(index)
 })
 
+app.use((err, req, res, next) => {
+    console.log('发生错误:', err)
+    return res.status(500)
+        .send({
+            errno: 1,
+            errmsg: '500',
+        })
+})
+
 app.listen(port, () => {
     console.log(`server start at http://localhost:${port}`)
 })

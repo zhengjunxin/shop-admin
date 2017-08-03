@@ -1,9 +1,12 @@
 const Banner = require('../proxy/banner')
 
-exports.getBanners = (req, res) => {
+exports.getBanners = (req, res, next) => {
     Banner.getBanners()
         .then(banners => {
             res.send(banners)
+        })
+        .catch(err => {
+            next(err)
         })
 }
 
