@@ -1,11 +1,15 @@
 const express = require('express')
 const path = require('path')
-require('./models')
 const axios = require('axios')
 const bodyParser = require('body-parser')
+const multer = require('multer')
+const fs = require('fs')
 
 const banner = require('./controllers/banner')
 const home = require('./controllers/home')
+
+require('./models')
+const looger = require('./common/logger')
 
 const app = express()
 const port = 8080
@@ -20,6 +24,23 @@ const getFile = req => {
 
 app.use(bodyParser.json())
 app.use(express.static(build))
+
+const imagesPath = path.join(__dirname, '..', 'images')
+app.use('/images', express.static(imagesPath))
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, imagesPath)
+    },
+    filename: function (req, file, cb) {
+        const extname = path.extname(file.originalname)
+        const filename = file.fieldname + '-' + Date.now() + extname
+        cb(null, filename)
+    }
+})
+
+const upload = multer({ storage: storage })
+
 
 app.get('/list', (req, res) => {
     res.send(JSON.stringify({
@@ -48,12 +69,19 @@ app.get('/api/cart/add', (req, res) => {
     res.send(getFile(req))
 })
 
+app.post('/upload', upload.single('file'), function (req, res) {
+    res.send({
+        filename: req.file.filename,
+    })
+})
+
 app.get('*', (req, res) => {
     res.sendFile(index)
 })
 
+// 错误处理
 app.use((err, req, res, next) => {
-    console.log('发生错误:', err)
+    logger.error(err)
     return res.status(500)
         .send({
             errno: 1,

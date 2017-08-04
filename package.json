@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^2.12.3",
     "axios": "^0.16.2",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
@@ -17,14 +18,14 @@
     "start-js": "react-scripts start",
     "start-react": "npm-run-all -p watch-css start-js",
     "start-server": "cd server && yarn start",
-    "start": "yarn start-react & yarn start-server",
+    "start": "npm-run-all -p start-react start-server",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build-js": "react-scripts build",
-    "build-react": "npm-run-all build-css build-js",
+    "build-react": "npm-run-all -p build-css build-js",
     "build-server": "cd server && yarn build",
-    "build": "npm-run-all build-react build-server",
+    "build": "npm-run-all -p build-react build-server",
     "serve": "cd server && yarn serve",
-    "deploy": "npm-run-all build serve"
+    "deploy": "npm-run-all -p build serve"
   },
   "proxy": "http://localhost:8080"
 }
