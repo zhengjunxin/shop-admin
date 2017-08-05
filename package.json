@@ -27,7 +27,8 @@
     "build-server": "cd server && yarn build",
     "build": "npm-run-all -p build-react build-server",
     "serve": "cd server && yarn serve",
-    "deploy": "npm-run-all -p build serve"
+    "deploy": "npm-run-all -p build serve",
+    "reject": "react-scripts eject"
   },
   "proxy": "http://localhost:8080"
 }
