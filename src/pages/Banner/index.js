@@ -2,27 +2,19 @@ import './index.css'
 import React from 'react'
 import { Table, Icon } from 'antd'
 import { Link } from 'react-router'
-import axios from 'axios'
-
-
+import { observer, inject } from 'mobx-react'
 
 const { Column } = Table
 
-export default class Banner extends React.Component {
-    state = {
-        banners: []
-    }
+@inject('bannerStore')
+@observer
+class Banner extends React.Component {
     componentDidMount() {
-        axios.get('/banners')
-            .then(res => {
-                const banners = res.data.banner
-                this.setState({
-                    banners
-                })
-            })
+        this.props.bannerStore.fetchBanners()
     }
     render() {
-        const { banners } = this.state
+        const banners = this.props.bannerStore.banners.slice()
+
         return (
             <div className="Banner">
                 <Table
@@ -75,3 +67,5 @@ export default class Banner extends React.Component {
         )
     }
 }
+
+export default Banner
