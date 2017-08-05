@@ -53,7 +53,9 @@ app.get('/list', (req, res) => {
 
 app.get('/index/index', home.index)
 
-app.get('/banners', banner.getBanners)
+app.get('/banners', (req, res) => {
+    res.send(getFile(req))
+})
 app.post('/banners', banner.setBanner)
 app.delete('/banner/:id', banner.remove)
 

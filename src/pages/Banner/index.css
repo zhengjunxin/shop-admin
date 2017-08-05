@@ -1,0 +1,9 @@
+.Banner__img {
+  width: 200px; }
+
+.Banner__status {
+  font-size: 20px; }
+  .Banner__status--check {
+    color: green; }
+  .Banner__status--close {
+    color: red; }

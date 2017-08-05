@@ -1,0 +1,37 @@
+{
+    "banner": [
+        {
+            "id": 1,
+            "ad_position_id": 1,
+            "media_type": 1,
+            "name": "合作 谁是你的菜",
+            "link": "",
+            "image_url": "http://yanxuan.nosdn.127.net/65091eebc48899298171c2eb6696fe27.jpg",
+            "content": "合作 谁是你的菜",
+            "end_time": 0,
+            "enabled": 1
+        },
+        {
+            "id": 2,
+            "ad_position_id": 1,
+            "media_type": 1,
+            "name": "活动 美食节",
+            "link": "",
+            "image_url": "http://yanxuan.nosdn.127.net/bff2e49136fcef1fd829f5036e07f116.jpg",
+            "content": "活动 美食节",
+            "end_time": 0,
+            "enabled": 1
+        },
+        {
+            "id": 3,
+            "ad_position_id": 1,
+            "media_type": 1,
+            "name": "活动 母亲节",
+            "link": "",
+            "image_url": "http://yanxuan.nosdn.127.net/8e50c65fda145e6dd1bf4fb7ee0fcecc.jpg",
+            "content": "活动 母亲节",
+            "end_time": 0,
+            "enabled": 1
+        }
+    ]
+}

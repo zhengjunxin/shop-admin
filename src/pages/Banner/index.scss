@@ -1,0 +1,15 @@
+.Banner {
+    &__img {
+        width: 200px;
+    }
+    &__status {
+        font-size: 20px;
+
+        &--check {
+            color: green;
+        }
+        &--close {
+            color: red;
+        }
+    }
+}
