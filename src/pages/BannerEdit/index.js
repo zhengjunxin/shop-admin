@@ -123,7 +123,7 @@ class BannerEdit extends React.Component {
                         })
                 }
                 else {
-                    axios.post('/banner', props)
+                    this.props.bannerStore.addBanner(props)
                         .then(res => {
                             message.success('首页广告增加成功')
                             this.props.router.replace('/banner')

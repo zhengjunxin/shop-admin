@@ -40,7 +40,7 @@ exports.addBanner = (req, res) => {
     }
 }
 
-exports.updateBanner = (req, res) => {
+exports.updateBanner = (req, res, next) => {
     const { id } = req.params
     const props = req.body
 
@@ -49,6 +49,9 @@ exports.updateBanner = (req, res) => {
             res.send({
                 banner,
             })
+        })
+        .catch(err => {
+            next(err)
         })
 }
 

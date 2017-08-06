@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import './index.css';
-import axios from 'axios'
+import './index.css'
 import { Upload, message, Button, Icon, Layout, Menu } from 'antd'
 
 const { Header, Sider, Content } = Layout
