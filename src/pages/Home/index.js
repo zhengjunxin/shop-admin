@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
 import './index.css'
-import { Upload, message, Button, Icon, Layout, Menu } from 'antd'
+import React, { Component } from 'react'
+import { Layout, Menu } from 'antd'
 
 const { Header, Sider, Content } = Layout
 const { SubMenu, Item } = Menu
-
 
 export default class Home extends Component {
 	render() {
@@ -38,21 +37,3 @@ export default class Home extends Component {
 		this.props.router.push(`/${key}`)
 	}
 }
-
-const props = {
-	name: 'file',
-	action: '/upload',
-	headers: {
-		authorization: 'authorization-text',
-	},
-	onChange(info) {
-		if (info.file.status !== 'uploading') {
-			console.log(info.file, info.fileList);
-		}
-		if (info.file.status === 'done') {
-			message.success(`${info.file.name} file uploaded successfully`);
-		} else if (info.file.status === 'error') {
-			message.error(`${info.file.name} file upload failed.`);
-		}
-	},
-};

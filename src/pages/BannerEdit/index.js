@@ -1,7 +1,6 @@
 import './index.css'
 import React from 'react'
 import { Form, Button, Input, Upload, Icon, message } from 'antd'
-import axios from 'axios'
 import { observer, inject } from 'mobx-react'
 
 const FormItem = Form.Item
@@ -16,7 +15,6 @@ class BannerEdit extends React.Component {
             this.props.bannerStore.fetchBanner(bannerId)
                 .then(() => {
                     const { banner } = this.props.bannerStore
-                    console.log('--banner', banner)
 
                     this.props.form.setFieldsValue({
                         name: banner.name,
@@ -60,7 +58,7 @@ class BannerEdit extends React.Component {
                             )}
                     </FormItem>
                     <FormItem
-                        label="位置"
+                        label="权重(越高越靠前)"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 8 }}
                     >

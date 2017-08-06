@@ -19,6 +19,4 @@ methods.forEach(method => {
     }
 })
 
-
-
 export default request
