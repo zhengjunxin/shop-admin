@@ -3,6 +3,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const fs = require('fs')
+const sharp = require('sharp')
+// require('./test')
 
 const banner = require('./controllers/banner')
 const home = require('./controllers/home')
@@ -43,7 +45,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer()
 
 
 app.get('/list', (req, res) => {
@@ -76,9 +78,17 @@ app.get('/api/cart/add', (req, res) => {
 })
 
 app.post('/upload', upload.single('file'), function (req, res) {
-    res.send({
-        url: `/images/${req.file.filename}`,
-    })
+    const extname = path.extname(req.file.originalname)
+    const file = req.file.originalname.replace(extname, '')
+    const filename = `${file}-${Date.now()}${extname}`
+
+    sharp(req.file.buffer)
+        .toFile(path.join(imagesPath, filename))
+        .then(() => {
+            res.send({
+                url: `/images/${filename}`,
+            })
+        })
 })
 
 app.get('*', (req, res) => {
