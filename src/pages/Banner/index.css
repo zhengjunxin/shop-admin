@@ -7,3 +7,6 @@
     color: green; }
   .Banner__status--close {
     color: red; }
+
+.Banner__Table .Banner__Column {
+  text-align: center; }

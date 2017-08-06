@@ -1,6 +1,5 @@
 const express = require('express')
 const path = require('path')
-const axios = require('axios')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const fs = require('fs')
@@ -9,7 +8,8 @@ const banner = require('./controllers/banner')
 const home = require('./controllers/home')
 
 require('./models')
-const looger = require('./common/logger')
+const logger = require('./common/logger')
+const { imagesPath } = require('./utils/paths')
 
 const app = express()
 const port = 8080
@@ -25,7 +25,11 @@ const getFile = req => {
 app.use(bodyParser.json())
 app.use(express.static(build))
 
-const imagesPath = path.join(__dirname, '..', 'images')
+fs.access(imagesPath, (err) => {
+    if (err) {
+        fs.mkdir(imagesPath)
+    }
+})
 app.use('/images', express.static(imagesPath))
 
 const storage = multer.diskStorage({
@@ -53,11 +57,11 @@ app.get('/list', (req, res) => {
 
 app.get('/index/index', home.index)
 
-app.get('/banners', (req, res) => {
-    res.send(getFile(req))
-})
-app.post('/banners', banner.setBanner)
+app.get('/banners', banner.getBanners)
+app.post('/banner', banner.addBanner)
+app.post('/banner/:id', banner.updateBanner)
 app.delete('/banner/:id', banner.remove)
+app.get('/banner/:id', banner.getBanner)
 
 app.get('/api/goods/detail', (req, res) => {
     res.send(getFile(req))
@@ -73,7 +77,7 @@ app.get('/api/cart/add', (req, res) => {
 
 app.post('/upload', upload.single('file'), function (req, res) {
     res.send({
-        filename: req.file.filename,
+        url: `/images/${req.file.filename}`,
     })
 })
 

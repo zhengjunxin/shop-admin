@@ -28,14 +28,14 @@ export default class Home extends Component {
 					</Sider>
 					<Content className="Home__Content">
 						{
-							this.props.children 
+							this.props.children
 						}
 					</Content>
 				</Layout>
 			</Layout>
 		)
 	}
-	onMenuItemClick = ({item, key, keyPath}) => {
+	onMenuItemClick = ({ item, key, keyPath }) => {
 		this.props.router.push(`/${key}`)
 	}
 }

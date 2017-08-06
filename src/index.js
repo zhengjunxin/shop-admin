@@ -9,6 +9,7 @@ import { Provider } from 'mobx-react'
 
 import Home from './pages/Home';
 import Banner from './pages/Banner';
+import BannerEdit from './pages/BannerEdit';
 
 import stores from './stores'
 
@@ -19,6 +20,8 @@ ReactDOM.render(
         <Router history={browserHistory}>
             <Route path="/" component={Home}>
                 <Route path="banner" component={Banner}></Route>
+                <Route path="banner/create" component={BannerEdit}></Route>
+                <Route path="banner/edit/:id" component={BannerEdit}></Route>
             </Route>
         </Router>
     </Provider>, document.getElementById('root'));

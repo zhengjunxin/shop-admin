@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
+const transformId = require('../utils/helper').transformId
 
 const Schema = new mongoose.Schema({
-    "id": Number,
     "ad_position_id": Number,
     "media_type": Number,
     "name": String,
@@ -9,8 +9,13 @@ const Schema = new mongoose.Schema({
     "image_url": String,
     "content": String,
     "end_time": Date,
-    "enabled": Number,
+    "enabled": {
+        type: Number,
+        default: 0,
+    }
 })
+
+transformId(Schema)
 
 const Banner = mongoose.model('Banner', Schema)
 

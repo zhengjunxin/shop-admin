@@ -12,4 +12,9 @@
             color: red;
         }
     }
+    &__Table {
+        .Banner__Column {
+            text-align: center;
+        }
+    }
 }

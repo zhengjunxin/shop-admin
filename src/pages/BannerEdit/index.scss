@@ -1,0 +1,24 @@
+.BannerEdit {
+    &__img {
+        max-height: 200px;
+    }
+    &__Upload {
+        .ant-upload-list-item {
+            height: auto;
+        }
+        .ant-upload-list-item-thumbnail {
+            width: auto;
+            height: auto;
+            max-height: 200px;
+            position: initial;
+        }
+        .ant-upload-list-item-thumbnail img {
+            width: auto;
+            height: auto;
+            max-height: 200px;
+        }
+        .ant-upload-list-item-name {
+            display: none;
+        }
+    }
+}
