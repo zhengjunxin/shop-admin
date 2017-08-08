@@ -5,57 +5,28 @@ const multer = require('multer')
 const fs = require('fs')
 const sharp = require('sharp')
 
-const banner = require('./controllers/banner')
-const home = require('./controllers/home')
-
 require('./models')
 require('./test')
 const logger = require('./common/logger')
-const { imagesPath } = require('./utils/paths')
+const { imagesPath, buildPath } = require('./utils/paths')
+const apiRoute = require('./routes/api')
 
 const app = express()
 const port = 8080
-const build = path.resolve(__dirname, '../../build')
-const mock = path.join(__dirname, '..', 'mock')
-const getFile = req => {
-    const route = req.route.path.slice(1).replace(/\//g, '.') + '.json'
-    const json = path.join(mock, route)
-    return require(json)
-}
-
-app.use(bodyParser.json())
-app.use(express.static(build))
+const upload = multer()
 
 fs.access(imagesPath, (err) => {
     if (err) {
         fs.mkdir(imagesPath)
     }
 })
+
+app.use(bodyParser.json())
+app.use(express.static(buildPath))
 app.use('/images', express.static(imagesPath))
+app.use('/api', apiRoute)
 
-const upload = multer()
-
-app.get('/index/index', home.index)
-
-app.get('/banners', banner.getBanners)
-app.post('/banner', banner.addBanner)
-app.post('/banner/:id', banner.updateBanner)
-app.delete('/banner/:id', banner.remove)
-app.get('/banner/:id', banner.getBanner)
-
-app.get('/api/goods/detail', (req, res) => {
-    res.send(getFile(req))
-})
-
-app.get('/api/cart/goodscount', (req, res) => {
-    res.send(getFile(req))
-})
-
-app.get('/api/cart/add', (req, res) => {
-    res.send(getFile(req))
-})
-
-app.post('/upload', upload.single('file'), function (req, res) {
+app.post('/api/upload', upload.single('file'), function (req, res) {
     const extname = path.extname(req.file.originalname)
     const file = req.file.originalname.replace(extname, '')
     const filename = `${file}-${Date.now()}${extname}`

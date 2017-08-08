@@ -1,11 +1,12 @@
 import { observable, runInAction, action } from 'mobx'
 import axios from 'axios'
+import { bannerUrl } from '../api'
 
 class Store {
     @observable banners = []
     @observable banner = null
     fetchBanners() {
-        axios.get('/banners')
+        axios.get(bannerUrl)
             .then(res => {
 
                 runInAction(() => {
@@ -14,7 +15,7 @@ class Store {
             })
     }
     updateBanner(bannerId, props) {
-        return axios.post(`/banner/${bannerId}`, props)
+        return axios.post(`${bannerUrl}/${bannerId}`, props)
     }
     @action.bound
     toggleBannerStatus(banner) {
@@ -38,7 +39,7 @@ class Store {
     }
     @action.bound
     deleteBanner(banner) {
-        axios.delete(`/banner/${banner.id}`)
+        axios.delete(`${bannerUrl}/${banner.id}`)
             .then(res => {
                 runInAction(() => {
                     this.banners = this.banners.filter(b => b.id !== banner.id)
@@ -46,7 +47,7 @@ class Store {
             })
     }
     fetchBanner(bannerId) {
-        return axios.get(`/banner/${bannerId}`)
+        return axios.get(`${bannerUrl}/${bannerId}`)
             .then(res => {
                 runInAction(() => {
                     this.banner = res.data.banner
@@ -54,7 +55,7 @@ class Store {
             })
     }
     addBanner(banner) {
-        return axios.post('/banner', banner)
+        return axios.post(`${bannerUrl}`, banner)
     }
 }
 

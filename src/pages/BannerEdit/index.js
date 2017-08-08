@@ -2,6 +2,7 @@ import './index.css'
 import React from 'react'
 import { Form, Button, Input, Upload, Icon, message } from 'antd'
 import { observer, inject } from 'mobx-react'
+import { uploadUrl } from '../../api'
 
 const FormItem = Form.Item
 
@@ -78,7 +79,7 @@ class BannerEdit extends React.Component {
                         })(
                             <Upload
                                 className="BannerEdit__Upload"
-                                name="file" action="/upload" listType="picture">
+                                name="file" action={uploadUrl} listType="picture">
                                 <Button>
                                     <Icon type="upload" />
                                     选择文件
