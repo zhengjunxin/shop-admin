@@ -4,19 +4,18 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const fs = require('fs')
 const sharp = require('sharp')
-// require('./test')
 
 const banner = require('./controllers/banner')
 const home = require('./controllers/home')
 
 require('./models')
+require('./test')
 const logger = require('./common/logger')
 const { imagesPath } = require('./utils/paths')
 
 const app = express()
 const port = 8080
 const build = path.resolve(__dirname, '../../build')
-const index = path.join(build, './index.html')
 const mock = path.join(__dirname, '..', 'mock')
 const getFile = req => {
     const route = req.route.path.slice(1).replace(/\//g, '.') + '.json'
@@ -34,28 +33,7 @@ fs.access(imagesPath, (err) => {
 })
 app.use('/images', express.static(imagesPath))
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, imagesPath)
-    },
-    filename: function (req, file, cb) {
-        const extname = path.extname(file.originalname)
-        const filename = file.fieldname + '-' + Date.now() + extname
-        cb(null, filename)
-    }
-})
-
 const upload = multer()
-
-
-app.get('/list', (req, res) => {
-    res.send(JSON.stringify({
-        data: {
-            a: 1,
-        },
-        ret: 0,
-    }))
-})
 
 app.get('/index/index', home.index)
 
@@ -89,10 +67,6 @@ app.post('/upload', upload.single('file'), function (req, res) {
                 url: `/images/${filename}`,
             })
         })
-})
-
-app.get('*', (req, res) => {
-    res.sendFile(index)
 })
 
 // 错误处理
