@@ -12,6 +12,7 @@ import Banner from './pages/Banner';
 import BannerEdit from './pages/BannerEdit';
 
 import stores from './stores'
+import './utils/configureAxios'
 
 useStrict(true)
 
