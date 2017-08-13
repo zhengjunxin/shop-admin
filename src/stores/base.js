@@ -7,8 +7,8 @@ class Store {
     constructor(url) {
         this.url = url
     }
-    fetchList() {
-        axios.get(this.url)
+    fetchList(params) {
+        axios.get(this.url, {params})
             .then(res => {
                 runInAction(() => {
                     this.list = res.data

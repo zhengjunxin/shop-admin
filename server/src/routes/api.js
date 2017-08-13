@@ -25,11 +25,11 @@ router.post('/goods', good.add)
 router.post('/goods/:id', good.update)
 router.delete('/goods/:id', good.remove)
 
-router.get('/categorys', category.list)
-router.get('/categorys/:id', category.show)
-router.post('/categorys', category.add)
-router.post('/categorys/:id', category.update)
-router.delete('/categorys/:id', category.remove)
+router.get('/categories', category.list)
+router.get('/categories/:id', category.show)
+router.post('/categories', category.add)
+router.post('/categories/:id', category.update)
+router.delete('/categories/:id', category.remove)
 
 router.get('/goods/detail', (req, res) => {
     res.send(getFile(req))

@@ -3,7 +3,9 @@ class Base {
         this.proxy = proxy
     }
     list = (req, res) => {
-        this.proxy.list()
+        const query = req.query
+
+        this.proxy.list(query)
             .then(result => {
                 res.send(result)
             })

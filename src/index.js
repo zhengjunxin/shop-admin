@@ -12,6 +12,7 @@ import Banner from './pages/Banner';
 import BannerEdit from './pages/BannerEdit';
 import GoodEdit from './pages/GoodEdit';
 import GoodList from './pages/GoodList';
+import CategoryList from './pages/CategoryList';
 import Category from './pages/Category';
 
 
@@ -32,7 +33,8 @@ ReactDOM.render(
                 <Route path="goods/add" component={GoodEdit}></Route>
                 <Route path="good/edit/:id" component={GoodEdit}></Route>
                 
-                <Route path="categories/list" component={Category}></Route>
+                <Route path="categories/list" component={CategoryList}></Route>
+                <Route path="categories/add" component={Category}></Route>
             </Route>
         </Router>
     </Provider>, document.getElementById('root'));

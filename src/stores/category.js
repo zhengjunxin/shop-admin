@@ -1,13 +1,10 @@
-const Category = require('../models/category')
+import { observable, action } from 'mobx'
+import BaseStore from './base'
+import { categoryUrl } from '../api'
+import axios from 'axios'
 
-exports.add = good => {
-    return Category.create(good)
+class Store extends BaseStore {
+    
 }
 
-exports.list = () => {
-    return Category.find()
-}
-
-exports.remove = _id => {
-    return Category.findByIdAndRemove(_id)
-}
+export default Store

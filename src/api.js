@@ -4,6 +4,6 @@ export const bannerUrl = `${API}/banners`
 
 export const goodUrl = `${API}/goods`
 
-export const categoryUrl = `${API}/categorys`
+export const categoryUrl = `${API}/categories`
 
 export const uploadUrl = `${API}/upload`

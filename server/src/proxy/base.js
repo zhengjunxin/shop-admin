@@ -5,8 +5,8 @@ class Base {
     add(entry) {
         return this.model.create(entry)
     }
-    list() {
-        return this.model.find()
+    list(query) {
+        return this.model.find(query)
     }
     remove(_id) {
         return this.model.findByIdAndRemove(_id)
