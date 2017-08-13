@@ -10,8 +10,8 @@ const Schema = new mongoose.Schema({
     "content": String,
     "end_time": Date,
     "enabled": {
-        type: Number,
-        default: 0,
+        type: Boolean,
+        default: false,
     }
 })
 

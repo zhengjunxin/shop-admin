@@ -1,7 +1,11 @@
 import BannerStore from './banner'
+import GoodStore from './good'
+import { bannerUrl, goodUrl, categoryUrl } from '../api'
+import BaseStore from './base'
 
-const bannerStore = new BannerStore()
 
 export default {
-    bannerStore,
+    bannerStore: new BannerStore(),
+    goodStore: new GoodStore(goodUrl),
+    categoryStore: new BaseStore(categoryUrl),
 }
