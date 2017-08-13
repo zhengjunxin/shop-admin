@@ -17,7 +17,7 @@ class Banner extends React.Component {
 
         return (
             <div className="Banner">
-                <Link to="/banner/create">
+                <Link to="/banners/add">
                     添加
                 </Link>
                 <Table
@@ -65,7 +65,7 @@ class Banner extends React.Component {
                         render={(banner) => {
                             return (
                                 <span>
-                                    <Link to={`/banner/edit/${banner.id}`}>编辑</Link>
+                                    <Link to={`/banners/edit/${banner.id}`}>编辑</Link>
                                     <Link onClick={e => toggleBannerStatus(banner)}>
                                         {
                                             banner.enabled ? '关闭' : '启用'

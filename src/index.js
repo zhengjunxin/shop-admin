@@ -24,13 +24,15 @@ ReactDOM.render(
     <Provider {...stores}>
         <Router history={browserHistory}>
             <Route path="/" component={Home}>
-                <Route path="banner" component={Banner}></Route>
-                <Route path="banner/create" component={BannerEdit}></Route>
-                <Route path="banner/edit/:id" component={BannerEdit}></Route>
-                <Route path="addGood" component={GoodEdit}></Route>
+                <Route path="banners/list" component={Banner}></Route>
+                <Route path="banners/add" component={BannerEdit}></Route>
+                <Route path="banners/edit/:id" component={BannerEdit}></Route>
+
+                <Route path="goods/list" component={GoodList}></Route>
+                <Route path="goods/add" component={GoodEdit}></Route>
                 <Route path="good/edit/:id" component={GoodEdit}></Route>
-                <Route path="goods" component={GoodList}></Route>
-                <Route path="category" component={Category}></Route>
+                
+                <Route path="categories/list" component={Category}></Route>
             </Route>
         </Router>
     </Provider>, document.getElementById('root'));

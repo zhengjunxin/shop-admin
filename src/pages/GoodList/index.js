@@ -17,7 +17,7 @@ class GoodList extends React.Component {
 
         return (
             <div className="Banner">
-                <Link to="/addGood">
+                <Link to="/goods/add">
                     添加
                 </Link>
                 <Table

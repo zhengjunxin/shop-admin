@@ -118,14 +118,14 @@ class BannerEdit extends React.Component {
                     this.props.bannerStore.updateBanner(bannerId, props)
                         .then(() => {
                             message.success('修改成功')
-                            this.props.router.replace('/banner')
+                            this.props.router.replace('/banners/list')
                         })
                 }
                 else {
                     this.props.bannerStore.addBanner(props)
                         .then(res => {
-                            message.success('首页广告增加成功')
-                            this.props.router.replace('/banner')
+                            message.success('添加成功')
+                            this.props.router.replace('/banners/list')
                         })
                 }
             }

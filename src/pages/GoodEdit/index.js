@@ -21,7 +21,6 @@ class GoodEdit extends React.Component {
                 .then(() => {
                     const good = this.props.goodStore.entry
                     console.log('--good', good)
-                    // {"name":"衣服","category_id":"598fb92feff92655654dd1cf","goods_brief":"cloth","retail_price":"100","goods_number":"1","list_pic_url":"/images/logo-1502608932488.png","gallery":["/images/avatar-1502608940995.jpeg","/images/avatar-1502608945850.jpeg"]}
 
                     this.props.form.setFieldsValue({
                         name: good.name,
