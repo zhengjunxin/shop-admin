@@ -29,6 +29,9 @@ class Store {
     }
     fetch(entryId) {
         return axios.get(`${this.url}/${entryId}`)
+            .then(action(res => {
+                this.entry = res.data
+            }))
     }
     add(entry) {
         return axios.post(`${this.url}`, entry)

@@ -20,6 +20,9 @@ class Base {
             new: true,
         })
     }
+    show(_id) {
+        return this.model.findById(_id)
+    }
 }
 
 module.exports = Base

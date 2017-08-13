@@ -31,11 +31,16 @@ class GoodList extends React.Component {
                         className="Banner__Column"
                     ></Column>
                     <Column
-                        title="商品图片"
-                        dataIndex="gallery"
+                        title="名称"
+                        dataIndex="name"
                         className="Banner__Column"
-                        render={gallery => (
-                            gallery[0] && <img src={gallery[0]} alt="img" className="GoodList__img" />
+                    ></Column>
+                    <Column
+                        title="商品主图"
+                        dataIndex="list_pic_url"
+                        className="Banner__Column"
+                        render={image => (
+                            <img src={image} alt="img" className="GoodList__img" />
                         )}
                     ></Column>
                     <Column
@@ -66,7 +71,7 @@ class GoodList extends React.Component {
                         render={(good) => {
                             return (
                                 <span>
-                                    <Link to={`/banner/edit/${good.id}`}>编辑</Link>
+                                    <Link to={`/good/edit/${good.id}`}>编辑</Link>
                                     <Link onClick={e => set(good, 'is_on_sale', !good['is_on_sale'])}>
                                         {
                                             good.is_on_sale ? '下架' : '上架'

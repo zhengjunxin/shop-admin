@@ -3,6 +3,7 @@ import React from 'react'
 import { Form, Button, Input, Upload, Icon, message, Select } from 'antd'
 import { observer, inject } from 'mobx-react'
 import { uploadUrl } from '../../api'
+import {urls2UploadStyle} from '../../utils/helper'
 
 const FormItem = Form.Item
 const { Option } = Select
@@ -13,27 +14,34 @@ const { Option } = Select
 class GoodEdit extends React.Component {
     componentDidMount() {
         this.props.goodStore.fetchCategories()
-        // const bannerId = this.props.routeParams.id
-        // if (bannerId) {
-        //     this.props.bannerStore.fetchBanner(bannerId)
-        //         .then(() => {
-        //             const { banner } = this.props.bannerStore
 
-        //             this.props.form.setFieldsValue({
-        //                 name: banner.name,
-        //                 goodId: banner.link ? banner.link.slice(banner.link.lastIndexOf('/') + 1) : '',
-        //                 position: banner.ad_position_id,
-        //             })
-        //         })
-        // }
+        const goodId = this.props.routeParams.id
+        if (goodId) {
+            this.props.goodStore.fetch(goodId)
+                .then(() => {
+                    const good = this.props.goodStore.entry
+                    console.log('--good', good)
+                    // {"name":"衣服","category_id":"598fb92feff92655654dd1cf","goods_brief":"cloth","retail_price":"100","goods_number":"1","list_pic_url":"/images/logo-1502608932488.png","gallery":["/images/avatar-1502608940995.jpeg","/images/avatar-1502608945850.jpeg"]}
+
+                    this.props.form.setFieldsValue({
+                        name: good.name,
+                        category_id: good.category_id,
+                        goods_brief: good.goods_brief,
+                        retail_price: good.retail_price,
+                        goods_number: good.goods_number,
+                    })
+                })
+        }
     }
     render() {
-        const { getFieldDecorator } = this.props.form
-        const isEdit = this.props.routeParams.id
-        const defaultFileList = isEdit && this.props.bannerStore.banner ?
-            [this.imageUrl2UploadStyle(this.props.bannerStore.banner.image_url)] : []
-        const { categories } = this.props.goodStore
-        console.log('-reander', categories.slice())
+        const { form, routeParams, goodStore } = this.props
+        const { getFieldDecorator } = form
+        const { categories, entry: good } = goodStore
+
+        const isEdit = routeParams.id
+
+        const picList = isEdit && good ? urls2UploadStyle([good.list_pic_url]) : []
+        const galleryList = isEdit && good ? urls2UploadStyle(good.gallery) : []
 
         return (
             <div className="GoodEdit">
@@ -104,12 +112,30 @@ class GoodEdit extends React.Component {
                             )}
                     </FormItem>
                     <FormItem
+                        label="商品主图"
+                    >
+                        {getFieldDecorator('list_pic_url', {
+                            valuePropName: 'fileList',
+                            getValueFromEvent: this.normFile,
+                            initialValue: picList,
+                        })(
+                            <Upload
+                                className="BannerEdit__Upload"
+                                name="file" action={uploadUrl} listType="picture">
+                                <Button>
+                                    <Icon type="upload" />
+                                    选择文件
+                                </Button>
+                            </Upload>
+                            )}
+                    </FormItem>
+                    <FormItem
                         label="商品图片"
                     >
                         {getFieldDecorator('gallery', {
                             valuePropName: 'fileList',
                             getValueFromEvent: this.normFile,
-                            initialValue: defaultFileList,
+                            initialValue: galleryList,
                         })(
                             <Upload
                                 className="BannerEdit__Upload"
@@ -138,40 +164,35 @@ class GoodEdit extends React.Component {
     }
     submit = e => {
         e.preventDefault();
-        const bannerId = this.props.routeParams.id
-        const mock = {"name":"name","category_id":"598fb92feff92655654dd1cf","goods_brief":"breif","retail_price":"100","goods_number":"1","gallery":["/images/logo-1502592436971.png", "/images/logo-1502592440363.png"] }
-
-        console.log(mock)
-        this.props.goodStore.add(mock)
-            .then(() => {
-                this.props.router.push('/goods')
-            })
-        return
+        const id = this.props.routeParams.id
 
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                // console.log('Received values of form: ', values);
+                console.log('Received values of form: ', values);
 
                 const gallery = values.gallery.map(upload => {
                     return upload.response.url
                 })
+                const list_pic_url = values.list_pic_url.map(pic => pic.response.url)[0]
+
                 const props = Object.assign({}, values, {
                     gallery,
+                    list_pic_url,
                 })
                 console.log(props, JSON.stringify(props))
-return
-                if (bannerId) {
-                    this.props.bannerStore.updateBanner(bannerId, props)
+
+                if (id) {
+                    this.props.goodStore.update(id, props)
                         .then(() => {
                             message.success('修改成功')
-                            this.props.router.replace('/banner')
+                            this.props.router.replace('/goods')
                         })
                 }
                 else {
-                    this.props.bannerStore.addBanner(props)
+                    this.props.goodStore.add(props)
                         .then(res => {
-                            message.success('首页广告增加成功')
-                            this.props.router.replace('/banner')
+                            message.success('添加成功')
+                            this.props.router.replace('/goods')
                         })
                 }
             }

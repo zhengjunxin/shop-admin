@@ -9,7 +9,12 @@ class Base {
             })
     }
     show = (req, res) => {
-        res.send('show')
+        const entryId = req.params.id
+
+        this.proxy.show(entryId)
+            .then(result => {
+                res.send(result)
+            })
     }
     add = (req, res) => {
         this.proxy.add(req.body)

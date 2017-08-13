@@ -28,6 +28,7 @@ ReactDOM.render(
                 <Route path="banner/create" component={BannerEdit}></Route>
                 <Route path="banner/edit/:id" component={BannerEdit}></Route>
                 <Route path="addGood" component={GoodEdit}></Route>
+                <Route path="good/edit/:id" component={GoodEdit}></Route>
                 <Route path="goods" component={GoodList}></Route>
                 <Route path="category" component={Category}></Route>
             </Route>
