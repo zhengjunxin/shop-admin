@@ -68,7 +68,11 @@ const mock = {
 }
 
 class Good extends Base {
-
+    detail = (req, res) => {
+        const { id } = req.query
+        req.params.id = id
+        this.show(req, res)
+    }
 }
 
 module.exports = new Good(Proxy)

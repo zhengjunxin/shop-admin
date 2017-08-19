@@ -18,6 +18,9 @@ router.delete('/banners/:id', banner.remove)
 router.get('/banners/:id', banner.getBanner)
 
 
+// 兼容严选的api
+router.get('/goods/detail', good.detail)
+
 // http://127.0.0.1:8360/api/goods/detail?id=1147048
 router.get('/goods', good.list)
 router.get('/goods/:id', good.show)
