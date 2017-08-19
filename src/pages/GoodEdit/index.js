@@ -3,15 +3,22 @@ import React from 'react'
 import { Form, Button, Input, Upload, Icon, message, Select } from 'antd'
 import { observer, inject } from 'mobx-react'
 import { uploadUrl } from '../../api'
-import {urls2UploadStyle} from '../../utils/helper'
+import { urls2UploadStyle } from '../../utils/helper'
 
 const FormItem = Form.Item
 const { Option } = Select
+
+
+const name2key = name => `attribute-${name}`
 
 @Form.create()
 @inject('goodStore')
 @observer
 class GoodEdit extends React.Component {
+    state = {
+        attributeKey: '',
+        attributes: [],
+    }
     componentDidMount() {
         this.props.goodStore.fetchCategories()
 
@@ -20,7 +27,6 @@ class GoodEdit extends React.Component {
             this.props.goodStore.fetch(goodId)
                 .then(() => {
                     const good = this.props.goodStore.entry
-                    console.log('--good', good)
 
                     this.props.form.setFieldsValue({
                         name: good.name,
@@ -28,6 +34,16 @@ class GoodEdit extends React.Component {
                         goods_brief: good.goods_brief,
                         retail_price: good.retail_price,
                         goods_number: good.goods_number,
+                    })
+
+                    this.setState({
+                        attributes: good.attribute.map((attr, index) => attr.name),
+                    }, () => {
+                        good.attribute.forEach((attr, index) => {
+                            this.props.form.setFieldsValue({
+                                [name2key(attr.name)]: attr.value,
+                            })
+                        })
                     })
                 })
         }
@@ -39,11 +55,13 @@ class GoodEdit extends React.Component {
 
         const isEdit = routeParams.id
 
-        const picList = isEdit && good ? urls2UploadStyle([good.list_pic_url]) : []
+        const picList = isEdit && good && good.list_pic_url ? urls2UploadStyle([good.list_pic_url]) : []
         const galleryList = isEdit && good ? urls2UploadStyle(good.gallery) : []
 
+        const { attributes, attributeKey } = this.state
+
         return (
-            <div className="GoodEdit">
+            <div className="Good">
                 <Form
                     onSubmit={this.submit}
                 >
@@ -77,6 +95,42 @@ class GoodEdit extends React.Component {
                             </Select>
                             )}
                     </FormItem>
+                    <FormItem
+                        label="商品参数"
+                        labelCol={{ span: 4 }}
+                        wrapperCol={{ span: 8 }}
+                    >
+                        <Input value={attributeKey} onChange={this.setAttributeKey} />
+                        <Button type="primary" onClick={this.addAttribute}>添加商品参数</Button>
+                    </FormItem>
+                    {
+                        attributes.map((attributeName, index) => {
+                            return (
+                                <FormItem
+                                    label={attributeName}
+                                    labelCol={{ span: 4 }}
+                                    wrapperCol={{ span: 8 }}
+                                    key={attributeName}
+                                >
+                                    {getFieldDecorator(name2key(attributeName), {
+                                        rules: [{ required: true, message: 'Please input your note!' }],
+                                    })(
+                                        <Input style={{ width: '60%', marginRight: 8 }} />
+                                        )}
+                                    {
+                                        attributes.length > 1 ? (
+                                            <Icon
+                                                className="dynamic-delete-button"
+                                                type="minus-circle-o"
+                                                disabled={attributes.length === 1}
+                                                onClick={() => this.removeAttribute(attributeName)}
+                                            />
+                                        ) : null
+                                    }
+                                </FormItem>
+                            )
+                        })
+                    }
                     <FormItem
                         label="商品简介"
                         labelCol={{ span: 4 }}
@@ -162,6 +216,7 @@ class GoodEdit extends React.Component {
         )
     }
     submit = e => {
+        const { attributes } = this.state
         e.preventDefault();
         const id = this.props.routeParams.id
 
@@ -174,9 +229,20 @@ class GoodEdit extends React.Component {
                 })
                 const list_pic_url = values.list_pic_url.map(pic => pic.response.url)[0]
 
+                const attribute = attributes.map((name, index) => {
+                    const prop = name2key(name)
+                    const value = values[prop]
+                    delete values[prop]
+                    return {
+                        name,
+                        value,
+                    }
+                })
+
                 const props = Object.assign({}, values, {
                     gallery,
                     list_pic_url,
+                    attribute,
                 })
                 console.log(props, JSON.stringify(props))
 
@@ -184,14 +250,14 @@ class GoodEdit extends React.Component {
                     this.props.goodStore.update(id, props)
                         .then(() => {
                             message.success('修改成功')
-                            this.props.router.replace('/goods')
+                            this.props.router.replace('/goods/list')
                         })
                 }
                 else {
                     this.props.goodStore.add(props)
                         .then(res => {
                             message.success('添加成功')
-                            this.props.router.replace('/goods')
+                            this.props.router.replace('/goods/list')
                         })
                 }
             }
@@ -212,6 +278,29 @@ class GoodEdit extends React.Component {
             }
         }
 
+    }
+    setAttributeKey = (e) => {
+        const value = e.target.value
+        this.setState({
+            attributeKey: value,
+        })
+    }
+    addAttribute = () => {
+        const { attributeKey, attributes } = this.state
+        if (!attributeKey.trim()) {
+            message.warn('请填写商品参数名称')
+            return
+        }
+        const nextAttribute = attributes.concat(attributeKey)
+        this.setState({
+            attributes: nextAttribute,
+            attributeKey: '',
+        })
+    }
+    removeAttribute = (attributeName) => {
+        this.setState({
+            attributes: this.state.attributes.filter(name => name !== attributeName),
+        })
     }
 }
 
