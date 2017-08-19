@@ -9,6 +9,7 @@ const Schema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    icon_url: String,
     wap_banner_url: String,
     parent_id: {
         type: String,

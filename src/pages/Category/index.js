@@ -109,6 +109,24 @@ class BannerEdit extends React.Component {
                                     )}
                             </FormItem>
                             <FormItem
+                                label="icon图片"
+                            >
+                                {getFieldDecorator('icon_url', {
+                                    valuePropName: 'fileList',
+                                    getValueFromEvent: this.normFile,
+                                    initialValue: defaultFileList,
+                                })(
+                                    <Upload
+                                        className="BannerEdit__Upload"
+                                        name="file" action={uploadUrl} listType="picture">
+                                        <Button>
+                                            <Icon type="upload" />
+                                            选择文件
+                                        </Button>
+                                    </Upload>
+                                    )}
+                            </FormItem>
+                            <FormItem
                                 label="横幅图片"
                             >
                                 {getFieldDecorator('wap_banner_url', {
@@ -158,9 +176,13 @@ class BannerEdit extends React.Component {
                 const wap_banner_url = values.wap_banner_url.map(upload => {
                     return upload.response.url
                 })[0]
+                const icon_url = values.icon_url.map(upload => {
+                    return upload.response.url
+                })[0]
 
                 const props = Object.assign({}, values, {
                     wap_banner_url,
+                    icon_url,
                 })
                 console.log(props, JSON.stringify(props))
 
@@ -172,8 +194,10 @@ class BannerEdit extends React.Component {
                         })
                 }
                 else {
-                    this.props.categoryStore.add(values)
-                        .then(() => {
+                    this.props.categoryStore.add(props)
+                    .then(() => {
+                            this.props.form.resetFields()
+                            message.success('添加成功')
                             this.fetchMainCategory()
                         })
                 }
