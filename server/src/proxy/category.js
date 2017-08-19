@@ -22,10 +22,10 @@ class Category extends Base {
     list(query) {
         return this.model.find(query)
             .populate('subCategoryList')
-            .then(result => result.sort((c1, c2) => c1.sort_order < c2.sort_order))
+            .then(result => result.sort((c1, c2) => c1.sort_order > c2.sort_order))
             .then(result => {
                 return result.map(category => {
-                    category.subCategoryList.sort((sub1, sub2) => sub1.sort_order < sub2.sort_order)
+                    category.subCategoryList.sort((sub1, sub2) => sub1.sort_order > sub2.sort_order)
                     return category
                 })
             })

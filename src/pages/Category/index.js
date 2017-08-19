@@ -98,7 +98,7 @@ class BannerEdit extends React.Component {
                                     )}
                             </FormItem>
                             <FormItem
-                                label="权重"
+                                label="排列位置"
                                 labelCol={{ span: 4 }}
                                 wrapperCol={{ span: 8 }}
                             >
