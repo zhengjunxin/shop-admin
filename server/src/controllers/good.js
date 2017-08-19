@@ -70,8 +70,41 @@ const mock = {
 class Good extends Base {
     detail = (req, res) => {
         const { id } = req.query
-        req.params.id = id
-        this.show(req, res)
+        this.proxy.show(id)
+            .then(result => {
+                const props = [
+                    'attribute',
+                    'gallery',
+                    'issue',
+                    'productList',
+                    'specificationList',
+                ]
+                const data = {
+                    info: {},
+                }
+                result = result.toObject()
+                Object.keys(result).forEach(key => {
+                    if (~props.indexOf(key)) {
+                        data[key] = result[key]
+                    }
+                    else {
+                        data.info[key] = result[key]
+                    }
+                })
+                data.gallery = data.gallery.map(imageUrl => {
+                    const item = {
+                        id: imageUrl,
+                        img_url: `http://localhost:8080${imageUrl}`,
+                    }
+                    return item
+                })
+                
+                res.send({
+                    errmsg: '',
+                    errno: 0,
+                    data,
+                })
+            })
     }
 }
 
