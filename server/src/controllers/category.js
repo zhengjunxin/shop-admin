@@ -5,6 +5,4 @@ class Category extends Base {
 
 }
 
-const controller = new Category(Proxy)
-
-module.exports = controller
+module.exports = new Category(Proxy)

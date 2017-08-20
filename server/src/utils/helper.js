@@ -9,7 +9,8 @@ exports.transformId = (Schema) => {
             delete ret.__v
             
             return ret
-        }
+        },
+        virtuals: true,
     })
     Schema.set('toObject', {
         transform(doc, ret, options) {
@@ -18,7 +19,8 @@ exports.transformId = (Schema) => {
             delete ret.__v
             
             return ret
-        }
+        },
+        virtuals: true,
     })
 }
 

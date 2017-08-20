@@ -4,6 +4,7 @@ const banner = require('../controllers/banner')
 const home = require('../controllers/home')
 const good = require('../controllers/good')
 const category = require('../controllers/category')
+const user = require('../controllers/user')
 
 const { getFile } = require('../utils/helper')
 
@@ -17,9 +18,12 @@ router.post('/banners/:id', banner.updateBanner)
 router.delete('/banners/:id', banner.remove)
 router.get('/banners/:id', banner.getBanner)
 
-
 // 兼容严选的api
 router.get('/goods/detail', good.detail)
+router.get('/goods/related', good.related)
+router.get('/cart/index', user.cart)
+router.post('/cart/add', user.addTocart)
+router.get('/cart/goodscount', user.goodscount)
 
 // http://127.0.0.1:8360/api/goods/detail?id=1147048
 router.get('/goods', good.list)
@@ -39,10 +43,6 @@ router.get('/goods/detail', (req, res) => {
 })
 
 router.get('/cart/goodscount', (req, res) => {
-    res.send(getFile(req))
-})
-
-router.get('/cart/add', (req, res) => {
     res.send(getFile(req))
 })
 

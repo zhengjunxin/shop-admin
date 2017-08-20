@@ -99,12 +99,29 @@ class Good extends Base {
                     return item
                 })
                 
+                data.productList.push({
+                    goods_id: data.info.id,
+                    goods_number: data.info.goods_number,
+                    goods_sn: data.info.id,
+                    goods_specification_ids: '',
+                    retail_price: data.info.retail_price,
+                })
+                
                 res.send({
                     errmsg: '',
                     errno: 0,
                     data,
                 })
             })
+    }
+    related = (req, res) => {
+        res.send({
+            errno: 0,
+            errmsg: '',
+            data: {
+                goodsList: [],
+            }
+        })
     }
 }
 
