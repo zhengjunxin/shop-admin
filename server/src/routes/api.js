@@ -24,6 +24,7 @@ router.get('/goods/related', good.related)
 router.get('/cart/index', user.cart)
 router.post('/cart/add', user.addTocart)
 router.get('/cart/goodscount', user.goodscount)
+router.post('/cart/checked', user.update)
 
 // http://127.0.0.1:8360/api/goods/detail?id=1147048
 router.get('/goods', good.list)

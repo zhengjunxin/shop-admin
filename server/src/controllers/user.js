@@ -1,37 +1,12 @@
 const Proxy = require('../proxy/user')
 const Base = require('./base')
-const { sum, prefixImageUrl } = require('../utils/helper')
 
 const defaultUserId = '599944f82f4b27bc96529b62'
 
 class User extends Base {
     cart = (req, res) => {
-        this.proxy.show(defaultUserId)
-            .populate('cartList.goodId')
-            .then(result => {
-                
-                const cartList = result.cartList.map(cart => {
-                    const good = Object.assign({}, {
-                        checked: cart.checked,
-                        number: cart.number,
-                    }, cart.goodId.toObject())
-
-                    good.goods_name = good.name
-                    good.list_pic_url = prefixImageUrl(good.list_pic_url)
-
-                    return good
-                })
-
-                const cartTotal = {
-                    "checkedGoodsCount": sum(cartList.map(good => good.number)),
-                    "checkedGoodsAmount": sum(cartList.map(good => good.number * good.retail_price)),
-                }
-
-                const data = {
-                    cartList,
-                    cartTotal,
-                }
-                
+        this.proxy.cart(defaultUserId)
+            .then(data => {
                 res.send({
                     errno: 0,
                     errmsg: '',
@@ -60,6 +35,21 @@ class User extends Base {
                 }
             }
         })
+    }
+    update = (req, res) => {
+        const { isChecked, goodId } = req.body
+
+        this.proxy.updateCart(defaultUserId, goodId, 'checked', !!isChecked)
+            .then(() => {
+                this.proxy.cart(defaultUserId)
+                    .then(data => {
+                        res.send({
+                            errno: 0,
+                            errmsg: '',
+                            data,
+                        })
+                    })
+            })
     }
 }
 
