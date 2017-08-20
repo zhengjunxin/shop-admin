@@ -4,12 +4,21 @@ const Good = require('../proxy/good')
 
 const prefixImageUrl = imageUrl => `http://localhost:8080${imageUrl}`
 
-// 异步获取 categories
-// 异步获取 cateogries 下的 goods
-
-exports.index = async (req, res) => {
+exports.index = (req, res) => {
     const banners = Banner.getBanners()
+        .then(banners => {
+            return banners.map(banner => {
+                banner.image_url = prefixImageUrl(banner.image_url)
+                return banner
+            })
+        })
     const categories = Category.list({ parent_id: 0 })
+        .then(categories => {
+            return categories.map(category => {
+                category.icon_url = prefixImageUrl(category.icon_url)
+                return category
+            })
+        })
     const categoryList = Category.list({ parent_id: 0 })
         .then(categories => {
             const all = []
@@ -37,14 +46,6 @@ exports.index = async (req, res) => {
 
     Promise.all([banners, categories, categoryList])
         .then(([banners, categories, categoryList]) => {
-            banners = banners.map(banner => {
-                banner.image_url = prefixImageUrl(banner.image_url)
-                return banner
-            })
-            categories = categories.map(category => {
-                category.icon_url = prefixImageUrl(category.icon_url)
-                return category
-            })
 
             const result = {
                 errno: 0,
