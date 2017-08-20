@@ -29,3 +29,14 @@ exports.getFile = req => {
     const json = path.join(mockPath, route)
     return require(json)
 }
+
+exports.sum = array => {
+    const length = array.length
+    let result = 0
+    for (let i = 0; i < length; i++) {
+        result += array[i]
+    }
+    return result
+}
+
+exports.prefixImageUrl = imageUrl => `http://localhost:8080${imageUrl}`

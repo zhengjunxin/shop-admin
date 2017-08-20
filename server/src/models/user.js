@@ -5,6 +5,10 @@ const Schema = new mongoose.Schema({
     cartList: [
         {
             number: Number,
+            checked: {
+                type: Boolean,
+                default: true,
+            },
             goodId: {
                 type: mongoose.Schema.ObjectId,
                 ref: 'Good',

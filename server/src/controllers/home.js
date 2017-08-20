@@ -1,8 +1,7 @@
 const Banner = require('../proxy/banner')
 const Category = require('../proxy/category')
 const Good = require('../proxy/good')
-
-const prefixImageUrl = imageUrl => `http://localhost:8080${imageUrl}`
+const { prefixImageUrl } = require('../utils/helper')
 
 exports.index = (req, res) => {
     const banners = Banner.getBanners()
